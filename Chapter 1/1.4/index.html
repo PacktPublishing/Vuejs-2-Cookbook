@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title></title>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <button v-on:click="toast">Toast bread</button>
+  </div>
+
+  <script>
+    new Vue({
+      el: '#app',
+      methods: {
+        toast() {
+          alert('Tosted🍞')
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>
