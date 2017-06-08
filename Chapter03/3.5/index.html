@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script type="text/javascript" src="https://vuejs.org/js/vue.js"></script>
+    <style type="text/css">
+        .fade-enter-active,
+        .fade-leave-active {
+            transition: opacity .5s
+        }
+        
+        .fade-enter,
+        .fade-leave-active {
+            opacity: 0
+        }
+        
+        .zoom-leave-active,
+        .zoom-enter-active {
+            transition: transform .5s;
+        }
+        
+        .zoom-leave-active,
+        .zoom-enter {
+            transform: scale(0)
+        }
+        
+        p {
+            margin: 0;
+            position: absolute;
+            font-size: 3em;
+        }
+    </style>
+    <title>3.11.1 (last) by gurghet</title>
+</head>
+
+<body>
+    <div id="app">
+        <button @click="kisses++">💋Kiss!</button>
+        <transition :name="kindOfTransformation" :mode="transformationMode">
+            <p :key="transformation">{{emoji}}{{transformation}}</p>
+        </transition>
+    </div>
+    <script type='text/javascript'>
+        new Vue({
+            el: '#app',
+            data: {
+                kisses: 0,
+                kindOfTransformation: 'fade',
+                transformationMode: 'in-out'
+            },
+            computed: {
+                transformation() {
+                    if (this.kisses < 3) {
+                        return 'frog'
+                    }
+                    if (this.kisses >= 3 && this.kisses <= 5) {
+                        return 'princess'
+                    }
+                    if (this.kisses > 5) {
+                        this.kindOfTransformation = 'zoom'
+                        this.transformationMode = 'out-in'
+                        return 'santa'
+                    }
+                },
+                emoji() {
+                    switch (this.transformation) {
+                        case 'frog':
+                            return '🐸'
+                        case 'princess':
+                            return '👸'
+                        case 'santa':
+                            return '🎅'
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

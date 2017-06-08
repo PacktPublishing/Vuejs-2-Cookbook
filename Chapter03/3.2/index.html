@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <script type="text/javascript" src="https://vuejs.org/js/vue.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="https://unpkg.com/animate.css@3.5.1/animate.min.css">
+
+
+
+  <style type="text/css">
+    @keyframes rumble {
+      10% {
+        margin-top: 20px
+      }
+      20% {
+        margin-top: 15px
+      }
+      30% {
+        margin-top: 20px
+      }
+      40% {
+        margin-top: 15px
+      }
+      100% {
+        margin-top: none
+      }
+    }
+    
+    .mySlideInRight {
+      transform: translateX(200px);
+    }
+    
+    .go {
+      transition: all 2s ease-out;
+      animation: rumble .5s linear 4;
+    }
+  </style>
+
+  <title>3.2.1 by gurghet</title>
+
+
+</head>
+
+<body>
+  <div id="app">
+    <button @click="taxiCalled = true">
+    Call a cab
+  </button>
+    <transition enter-class="mySlideInRight" enter-active-class="go">
+      <p v-if="taxiCalled">🚕</p>
+    </transition>
+  </div>
+
+
+
+
+
+
+  <script type='text/javascript'>
+    new Vue({
+      el: '#app',
+      data: {
+        taxiCalled: false
+      }
+    })
+  </script>
+
+</body>
+
+</html>

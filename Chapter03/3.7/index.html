@@ -1,0 +1,57 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <script type="text/javascript" src="https://vuejs.org/js/vue.js"></script>
+  
+
+  
+
+  <style type="text/css">
+    .v-leave-active {
+  transition: all 1s;
+  opacity: 0;
+  transform: translateY(-30px);
+}
+  </style>
+
+  <title>3.7.2 by gurghet</title>
+
+
+  
+</head>
+
+<body>
+  <div id="app">
+  <h3>Syllabus</h3>
+  <transition-group tag="ul">
+    <li v-for="topic in syllabus" :key="topic">
+      <button @click="completed(topic)">Done</button>{{topic}}
+    </li>
+  </transition-group>
+</div>
+<script>
+new Vue({
+  el: '#app',
+  data: {
+  	syllabus: [
+    	'HTML',
+      'CSS',
+      'Scratch',
+      'JavaScript',
+      'Python'
+    ]
+  },
+  methods: {
+  	completed (topic) {
+    	let index = this.syllabus.indexOf(topic)
+    	this.syllabus.splice(index, 1)
+    }
+  }
+})
+
+</script>
+</body>
+
+</html>
+

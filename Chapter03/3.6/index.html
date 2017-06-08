@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+
+  <script type="text/javascript" src="https://vuejs.org/js/vue.js"></script>
+
+  
+  <style type="text/css">
+    .slide-enter-active, .slide-leave-active {
+  transition: transform .5s
+}
+.slide-enter {
+  transform: translateX(300px)
+}
+.slide-leave-active {
+  transform: translateX(-300px);
+}
+
+p {
+  position: absolute;
+  margin: 0;
+  font-size: 3em;
+}
+  </style>
+
+  <title>3.6.1 by gurghet</title>
+
+  
+    
+
+
+
+
+
+
+  
+</head>
+
+<body>
+  <div id="app">
+  <button @click="product++">next</button>
+  <transition name="slide">
+    <p :key="products[product%4]">{{products[product%4]}}</p>
+  </transition>
+</div>
+  <script>
+new Vue({
+	el: '#app',
+  data: {
+  	product: 0,
+  	products: ['🌂umbrella', '🖥computer', '🏀ball', '📸camera']
+  }
+})
+
+</script>
+
+</body>
+
+</html>
+

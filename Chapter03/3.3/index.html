@@ -1,0 +1,58 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+
+  <script type="text/javascript" src="https://vuejs.org/js/vue.js"></script>
+    
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.min.js"></script>
+  <style type="text/css">
+    
+  </style>
+
+  <title>3.3.3 by gurghet</title>
+  
+</head>
+
+<body>
+  <div id="app">
+  <button @click="taxiCalled = true">
+    Call a cab
+  </button>
+  <button @click="taxiCalled = false">
+    Cancel
+  </button>
+  <transition
+    @enter="enter"
+    @leave="leave"
+    :css="false"
+  >
+    <p v-if="taxiCalled">🚕</p>
+  </transition>
+</div>
+<script type='text/javascript'>
+new Vue({
+  el: '#app',
+  data: {
+    taxiCalled: false
+  },
+  methods: {
+    enter (el, done) {
+      Velocity(el, 
+      { opacity: [1, 0], translateX: ["0px", "200px"] },
+      { duration: 2000, easing: "ease-out", complete: done })
+    },
+    leave (el, done) {
+    	Velocity(el,
+      { opacity: [0, 1], 'font-size': ['0.1em', '1em'] },
+      { duration: 200, complete: done })
+    }
+  }
+})
+
+</script>
+
+</body>
+
+</html>
+

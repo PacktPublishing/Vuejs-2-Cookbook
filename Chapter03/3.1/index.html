@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script type="text/javascript" src="https://vuejs.org/js/vue.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://unpkg.com/animate.css@3.5.1/animate.min.css">
+  <title>3.1.1 (true) by gurghet</title>
+</head>
+
+<body>
+  <div id="app">
+    <button @click="taxiCalled = true">
+    Call a cab
+  </button>
+    <transition name="custom-classes-transition" enter-active-class="animated slideInRight">
+      <p v-if="taxiCalled">🚕</p>
+    </transition>
+  </div>
+
+  <script type='text/javascript'>
+    new Vue({
+      el: '#app',
+      data: {
+        taxiCalled: false
+      }
+    })
+  </script>
+</body>
+</html>

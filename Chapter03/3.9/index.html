@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script type="text/javascript" src="https://vuejs.org/js/vue.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/16.3.5/Tween.min.js"></script>
+    <style type="text/css">
+        .ball {
+            width: 3em;
+            height: 3em;
+            background-color: red;
+            border-radius: 50%;
+            position: absolute;
+            left: 10em;
+        }
+    </style>
+    <title>3.9.1 by gurghet</title>
+</head>
+
+<body>
+    <div id="app">
+        <input v-model.number="enteredHeight" type="number">
+        <div class="ball" :style="'top: ' + height + 'em'"></div>
+    </div>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                enteredHeight: 0,
+                height: 0
+            },
+            watch: {
+                enteredHeight(newHeight, oldHeight) {
+                    const _this = this
+                    const animate = (time) => {
+                        requestAnimationFrame(animate)
+                        TWEEN.update(time)
+                    }
+                    new TWEEN.Tween({
+                            H: this.height
+                        })
+                        .easing(TWEEN.Easing.Quadratic.Out)
+                        .to({
+                            H: newHeight
+                        }, 500)
+                        .onUpdate(function() {
+                            _this.height = this.H
+                        })
+                        .start()
+                    animate()
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
