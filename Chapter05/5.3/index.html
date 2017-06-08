@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>5.3</title>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <h3>Write a new post</h3>
+    <form>
+      <div>
+        <label>Title of your post:</label>
+        <input type="text" v-model="title">
+      </div>
+      <div>
+        <label>Write your thoughts for the day</label>
+        <textarea v-model="body"></textarea>
+      </div>
+      <div>
+        <button @click.prevent="submit">Submit</button>
+      </div>
+    </form>
+    <h3>Rensponse from the server</h3>
+    <pre>{{response}}</pre>
+  </div>
+
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        userId: 1,
+        title: '',
+        body: '',
+        response: '...'
+      },
+      methods: {
+        submit () {
+          const xhr = new XMLHttpRequest()
+          xhr.open('post', 'http://jsonplaceholder.typicode.com/posts')
+          xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8')
+          xhr.onreadystatechange = () => {
+            const DONE = 4
+            const CREATED = 201
+            if (xhr.readyState === DONE) {
+              if (xhr.status === CREATED) {
+                this.response = xhr.response
+              } else {
+                this.response = 'Error: ' + xhr.status
+              }
+            }
+          }
+          xhr.send(JSON.stringify({
+            title: this.title,
+            body: this.body,
+            userId: this.userId
+          }))
+        }
+      }
+    })
+  </script>
+</body>
+</html>

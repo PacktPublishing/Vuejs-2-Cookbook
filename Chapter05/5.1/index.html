@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>5.1</title>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.js"></script>
+</head>
+<body>
+  <div id="app">
+    <h2>Advice of the day</h2>
+    <p>{{advice}}</p>
+  </div>
+
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        advice: 'loading...'
+      },
+      created () {
+        axios.get('http://api.adviceslip.com/advice')
+          .then(response => {
+            this.advice = undefined.hello
+          })
+          .catch(error => {
+            this.advice = 'There was an error: ' + error.message
+          })
+      }
+    })
+  </script>
+</body>
+</html>

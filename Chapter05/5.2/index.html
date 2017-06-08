@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>5.2</title>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <form @submit.prevent="vueSubmit">
+      <div>
+        <label>Name</label>
+        <input type="text" required>
+      </div>
+      <div>
+        <label>Email</label>
+        <input type="email" required>
+      </div>
+      <div>
+        <label>Submit</label>
+        <button type="submit">Submit</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    new Vue({
+      el: '#app',
+      methods: {
+        vueSubmit() {
+          console.info('fake AJAX request')
+        }
+      }
+    })
+  </script>
+</body>
+</html>

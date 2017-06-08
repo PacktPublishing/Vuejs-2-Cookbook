@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>5.7</title>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+  <h3>Who’s better: Socrates or Plato?</h3>
+  <p>Technically, without Plato we wouldn't have<br>
+  much to go on when it comes to information about<br>
+  Socrates. Plato ftw!</p>
+  <div id="app">
+    <form>
+      <label>Write your comment:</label>
+      <textarea v-model="message"></textarea>
+      <button @click.prevent="submit">Send!</button>
+    </form>
+    <p>Server got: {{response}}</p>
+  </div>
+
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        message: '',
+        response: '...'
+      },
+      methods: {
+        submit () {
+          axios.post('http://jsonplaceholder.typicode.com/comments',
+            {
+              body: this.message
+            }).then(response => {
+              this.response = response.data
+            })
+        }
+      },
+      mounted () {
+        axios.interceptors.request.use(config => {
+          const body = config.data.body.replace(/punk/i, '***')
+          config.data.body = body
+          return config
+        })
+      }
+    })
+  </script>
+</body>
+</html>

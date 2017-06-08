@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>5.6</title>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.js"></script>
+</head>
+<body>
+  <div id="app">
+    <p v-for="word in words">{{word}}</p>
+  </div>
+
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        bottom: false,
+        words: []
+      },
+      watch: {
+        bottom (bottom) {
+          if (bottom) {
+            this.addWord()
+          }
+        }
+      },
+      methods: {
+        addWord () {
+          axios.get('http://www.setgetgo.com/randomword/get.php')
+            .then(response => {
+              this.words.push(response.data)
+              if (this.bottomVisible()) {
+                this.addWord()
+              }
+            })
+        },
+        bottomVisible () {
+          const visibleHeight = document.documentElement.clientHeight
+          const pageHeight = document.documentElement.scrollHeight
+          const scrolled = window.scrollY
+          const reachedBottom = visibleHeight + scrolled >= pageHeight
+          return reachedBottom || pageHeight < visibleHeight
+        }
+      },
+      created () {
+        window.addEventListener('scroll', () => {
+          this.bottom = this.bottomVisible()
+        })
+        this.addWord()
+      }
+    })
+  </script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>5.5</title>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.js"></script>
+  <!--
+    To install the server you type in the command line
+    ```
+    npm install -g feathers-cli
+    mkdir my-server
+    cd my-server
+    feathers generate
+    ```
+    Answer to all question with the default value and
+    when it’s finished you will be inside feathers.
+    Type 
+    ```
+    generate service
+    ```
+    Then call your service `messages` and leave all
+    the other questions to default. Type `exit` to
+    leave feathers. After that type
+    ```
+    npm start
+    ```
+    Your server is now started.
+  -->
+</head>
+<body>
+  <div id="app">
+    <h3>Sticky messages</h3>
+    <ol>
+      <li v-for="message in messages">
+        <button @click="deleteItem(message._id)">Delete</button>
+        <button @click="edit(message._id, message.text)">edit</button>
+        <input v-model="message.text">
+      </li>
+    </ol>
+    <input v-model="toAdd">
+    <button @click="add">add</button>
+  </div>
+
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        messages: [],
+        toAdd: ''
+      },
+      created () {
+        axios.get('http://localhost:3030/messages/')
+          .then(response => {
+            this.messages = response.data.data
+          })
+      },
+      methods: {
+        deleteItem (id) {
+          console.log('delete')
+          axios.delete('http://localhost:3030/messages/' + id)
+            .then(response => {
+              if (response.status < 400) {
+                this.messages.splice(this.messages.findIndex(e => e.id === id), 1)
+              }
+            })
+        },
+        add () {
+          axios.post('http://localhost:3030/messages/', {
+            text: this.toAdd
+          })
+            .then(response => {
+              if (response.status === 201) {
+                this.messages.push(response.data)
+              }
+            })
+        },
+        edit (id, text) {
+          axios.put('http://localhost:3030/messages/' + id, {
+            text
+          })
+            .then(response => {
+              if (response.status < 400) {
+                console.info(response.status)
+              }
+            })
+        }
+      }
+    })
+  </script>
+</body>
+</html>
