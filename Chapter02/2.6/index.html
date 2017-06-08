@@ -1,0 +1,29 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title></title>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+
+<body>
+  <div id="ghost">
+    <div v-show="isNight">
+      I'm a ghost! Boo!
+    </div>
+  </div>
+
+  <script>
+    new Vue({
+      el: '#ghost',
+      computed: {
+        isNight() {
+          return (new Date()).getHours() < 7
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,101 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">
+
+  
+  
+
+  
+  
+  
+
+  
+
+  <script type="text/javascript" src="/js/lib/dummy.js"></script>
+
+  
+
+  
+
+  
+
+  
+    <link rel="stylesheet" type="text/css" href="/css/result-light.css">
+  
+
+  
+    
+      <script type="text/javascript" src="https://npmcdn.com/vue@next/dist/vue.js"></script>
+    
+  
+
+  <style type="text/css">
+    
+  </style>
+
+  <title>2.7.1 by gurghet</title>
+
+  
+    
+
+
+
+
+<script type='text/javascript'>//<![CDATA[
+window.onload=function(){
+new Vue({
+  el: '#app',
+  data: {
+    legCount: 0
+  },
+  methods: {
+  	update (e) {
+    	this.tableCount = e.target.value
+    }
+  },
+  computed: {
+    tableCount: {
+    	get () {
+      	return this.legCount / 4
+      },
+      set (newValue) {
+      	this.legCount = newValue * 4
+      }
+    }
+  }
+})
+}//]]> 
+
+</script>
+
+  
+</head>
+
+<body>
+  <div id="app">
+  <label>Legs: <input v-model="legCount" type="range"></label><br>
+  <label>Tops: <input @input="update" :value="tableCount"></label><br>
+  <output>
+    We are going to build {{legCount}} legs
+    and assembly {{tableCount}} tables.
+  </output>
+</div>
+  
+  <script>
+  // tell the embed parent frame the height of the content
+  if (window.parent && window.parent.parent){
+    window.parent.parent.postMessage(["resultsFrame", {
+      height: document.body.getBoundingClientRect().height,
+      slug: "jfmw4zx1"
+    }], "*")
+  }
+</script>
+
+</body>
+
+</html>
+

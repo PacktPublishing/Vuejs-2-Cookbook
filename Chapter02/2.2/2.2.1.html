@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">
+
+  
+  
+
+  
+  
+  
+
+  
+
+  <script type="text/javascript" src="//vuejs.org/js/vue.js"></script>
+
+  
+
+  
+
+  
+
+  
+    <link rel="stylesheet" type="text/css" href="/css/result-light.css">
+  
+
+  
+    
+      <script type="text/javascript" src="https://npmcdn.com/vue@next/dist/vue.js"></script>
+    
+  
+
+  <style type="text/css">
+    
+  </style>
+
+  <title>2.2.5 by gurghet</title>
+
+  
+    
+
+
+
+
+<script type='text/javascript'>//<![CDATA[
+window.onload=function(){
+new Vue({
+	el: '#exp-exp',
+  data: {
+  	experiments: [
+    	{name: 'RHIC Ion Collider', cost: 650, field: 'Physics'},
+      {name: 'Neptune Undersea Observatory', cost: 100, field: 'Biology'},
+      {name: 'Violinist in the Metro', cost: 3, field: 'Psychology'},
+      {name: 'Large Hadron Collider', cost: 7700, field: 'Physics'},
+      {name: 'DIY Particle Detector', cost: 0, field: 'Physics'}
+    ]
+  },
+  computed: {
+  	filteredExperiments () {
+    	return this.lowCost(this.nonPhysics(this.experiments))
+    }
+  }, 
+  methods: {
+  	nonPhysics (list) {
+    	return list.filter(exp => exp.field !== 'Physics')
+    },
+    lowCost (list) {
+    	return list.filter(exp => exp.cost <= 3)
+    }
+  }
+})
+}//]]> 
+
+</script>
+
+  
+</head>
+
+<body>
+  <div id="exp-exp">
+  <h3>List of expensive experiments</h3>
+  <ul>
+    <li v-for="exp in filteredExperiments">
+      {{exp.name}} ({{exp.cost}}m €)
+    </li>
+  </ul>
+</div>
+  
+  <script>
+  // tell the embed parent frame the height of the content
+  if (window.parent && window.parent.parent){
+    window.parent.parent.postMessage(["resultsFrame", {
+      height: document.body.getBoundingClientRect().height,
+      slug: "y8oq6a1w"
+    }], "*")
+  }
+</script>
+
+</body>
+
+</html>
+

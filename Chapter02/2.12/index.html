@@ -1,0 +1,90 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+
+  <script type="text/javascript" src="https://vuejs.org/js/vue.js"></script>
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  <style type="text/css">
+    
+  </style>
+
+  <title>2.12.M by gurghet</title>
+
+  
+</head>
+
+<body>
+  <div id="app"> 
+<form>
+  <fieldset>
+    <legend>Choose your animal</legend>
+      <select v-model="clan">
+        <option v-for="(types, clan) in clans">{{clan}}</option>
+      </select>
+      <select v-model="type">
+        <option v-for="(species, type) in clans[clan]">{{type}}</option>
+      </select>
+      <select v-if="clans[clan]">
+  <option v-for="(animals, species) in clans[clan][type]">{{species}}</option>
+</select>
+
+    </fieldset>
+  </form>
+</div>
+  
+
+
+
+
+<script type='text/javascript'>//<![CDATA[
+
+new Vue({
+  el:'#app',
+  data:{
+  	clan: undefined,
+		type: undefined,
+    clans: {
+  		mammalia: {
+    		'have fingers': {
+      		human: 'human',
+      		chimpanzee: 'chimpanzee'
+    		},
+    		fingerless: {
+      		cat: 'cat',
+      		bear: 'bear'
+    		}
+  		},
+ 	 		birds: {
+    		flying: {
+      		eagle: 'eagle',
+      		pidgeon: 'pidgeon'
+    		},
+    		'non flying': {
+      		chicken: 'chicken'
+    		}
+  		}
+		}
+  }
+})
+
+//]]> 
+
+</script>
+
+
+</body>
+
+</html>
+

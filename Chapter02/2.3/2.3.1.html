@@ -1,0 +1,120 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">
+
+  
+  
+
+  
+  
+  
+
+  
+
+  <script type="text/javascript" src="//vuejs.org/js/vue.js"></script>
+
+  
+
+  
+
+  
+
+  
+    <link rel="stylesheet" type="text/css" href="/css/result-light.css">
+  
+
+  
+    
+      <script type="text/javascript" src="https://npmcdn.com/vue@next/dist/vue.js"></script>
+    
+  
+
+  <style type="text/css">
+    .ascending:after {
+  content: "\25B2"
+}
+
+.descending:after {
+  content: "\25BC"
+}
+  </style>
+
+  <title>2.3.M by gurghet</title>
+
+  
+    
+
+
+
+
+<script type='text/javascript'>//<![CDATA[
+window.onload=function(){
+new Vue({
+  el: '#app',
+  data: {
+    dams: [
+      {name: 'Nurek Dam', country: 'Tajikistan', electricity: 3200},
+      {name: 'Three Gorges Dam', country: 'China', electricity: 22500},
+      {name: 'Tarbela Dam', country: 'Pakistan', electricity: 3500},
+      {name: 'Guri Dam', country: 'Venezuela', electricity: 10200}
+    ],
+    order: 1
+  },
+  computed: {
+  	damsByElectricity () {
+    	return this.dams.sort((d1, d2) => 
+      	(d2.electricity - d1.electricity) * this.order);
+  	}
+  },
+  methods: {
+  	sort () {
+    	this.order = this.order * -1
+    }
+  }
+})
+}//]]> 
+
+</script>
+
+  
+</head>
+
+<body>
+  <div id="app">
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Country</th>
+      <th :class="order === 1 ? 'descending' : 'ascending'"
+          @click="sort">Electricity</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr v-for="dam in damsByElectricity">
+      <td>{{dam.name}}</td>
+      <td>{{dam.country}}</td>
+      <td>{{dam.electricity}} MegaWatts</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+  
+  <script>
+  // tell the embed parent frame the height of the content
+  if (window.parent && window.parent.parent){
+    window.parent.parent.postMessage(["resultsFrame", {
+      height: document.body.getBoundingClientRect().height,
+      slug: "24rtga4f"
+    }], "*")
+  }
+</script>
+
+</body>
+
+</html>
+

@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <script type="text/javascript" src="https://vuejs.org/js/vue.js"></script>
+
+      <script type="text/javascript" src="https://npmcdn.com/vue@next/dist/vue.js"></script>
+    
+  <style type="text/css">
+    .warn {
+  background-color: mistyrose
+}
+  </style>
+
+  <title>2.8.1 by gurghet</title>
+
+  
+</head>
+
+<body>
+  <div id="app">
+  <textarea 
+    v-model="memeText"
+    :class="{ warn: longText }"
+    :maxlength="limit">
+   </textarea>
+  {{memeText.length}}
+</div>
+  <script type='text/javascript'>//<![CDATA[
+
+new Vue({
+  el: '#app',
+  data: {
+  	memeText: `What if I told you
+CSS could do that`,
+		limit: 50
+  },
+  computed: {
+    longText () {
+    	if (this.limit - this.memeText.length <= 10) {
+      	return true
+      } else {
+      	return false
+      }
+    }
+  }
+})
+//]]> 
+
+</script>
+
+</body>
+
+</html>
+
