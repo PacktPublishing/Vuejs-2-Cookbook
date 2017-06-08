@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>4.10</title>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <span v-if="loading">loading...</span>
+    <xuande-period-vase></xuande-period-vase>
+  </div>
+
+  <script>
+    Vue.component('XuandePeriodVase', (resolve, reject) => {
+      setTimeout(() => {
+        if ((new Date()).getDay() !== 6) {
+          resolve({
+            template: '<div>⚱️ Buy for only 4000000</div>',
+            mounted () {
+              this.$parent.$emit('loaded')
+            }
+          })
+        } else {
+          reject("Today is Sunday, Internet is closed!")
+        }
+      }, 1000)
+    })
+    new Vue({
+      el: '#app',
+      data: {
+        loading: true
+      },
+      created () {
+        this.$on('loaded', () => {
+          this.loading = false
+        })
+      }
+    })
+  </script>
+</body>
+</html>

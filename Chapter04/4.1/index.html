@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>4.1</title>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <light-bulb></light-bulb>
+    <light-bulb></light-bulb>
+    <light-bulb></light-bulb>
+  </div>
+
+  <script>
+    var lightBulb = {
+      template: `
+      <div class='light-bulb'>
+        <p>💡Eureka!</p>
+      </div>
+      `
+    }
+    new Vue({
+      el: '#app',
+      components: {
+        'light-bulb': lightBulb
+      }
+    })
+  </script>
+</body>
+</html>

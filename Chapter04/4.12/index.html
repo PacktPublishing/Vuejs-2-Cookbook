@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>4.12</title>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <dialog-box
+      command="confirmation"
+      :cancellable="true"
+      @cancel="msg = 'cancelled'"
+      @ok="msg = 'confirmed'">
+        <span slot="icon">⚠️</span>
+        <span slot="message">Do you confirm?</span>
+    </dialog-box>
+    <p>Output: {{msg}}</p>
+  </div>
+
+  <script>
+    Vue.component('dialog-box', {
+      template: `<div>
+                   <div class="icon">
+                     <slot name="icon"></slot>
+                   </div>
+                   <slot name="message"></slot>
+                   <div class="buttons">
+                     <button v-if="cancellable"
+                             @click="cancel()">
+                       Cancel
+                     </button>
+                     <button @click="ok()">
+                       OK
+                     </button>
+                   </div>
+                 </div>`,
+      props: {
+        command: String,
+        cancellable: Boolean
+      },
+      methods: {
+        cancel () {
+          this.$emit('cancel', this.command)
+        },
+        ok () {
+          this.$emit('ok', this.command)
+        }
+      }
+    })
+    new Vue({
+      el: '#app',
+      data: {
+        msg: 'undefined'
+      }
+    })
+  </script>
+</body>
+</html>

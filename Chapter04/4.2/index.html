@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>4.2</title>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <label>Sound level</label>
+    <input type="number" v-model.number="soundLevel">
+    <sound-icon :sound-level="soundLevel"></sound-icon>
+  </div>
+
+  <script>
+    Vue.component('sound-icon', {
+      template: "<span>{{soundEmojis[soundLevel]}}</span>",
+      props: {
+        'soundLevel': {
+          required: true,
+          default: 0,
+          validator (value) {
+            return value >= 0 && value <= 3
+          }
+        }
+      },
+      data () {
+        return {
+          soundEmojis: ['🔇', '🔈', '🔉', '🔊']
+        }
+      }
+    })
+    new Vue({
+      el: '#app',
+      data: {
+        soundLevel: 0
+      }
+    })
+  </script>
+</body>
+</html>

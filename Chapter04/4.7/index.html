@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>4.7</title>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <style>
+    .super {
+      filter: hue-rotate(120deg);
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <greeter></greeter>
+    <super-greeter></super-greeter>
+  </div>
+
+  <script>
+    var Greeter = {
+      template: '<p>{{message}}<button @click="greet">greet</button></p>',
+      data () {
+        return {
+          message: '...'
+        }
+      },
+      methods: {
+        greet () {
+          this.message = 'hello'
+        }
+      }
+    }
+    var SuperGreeter = {
+      mixins: [Greeter],
+      template: '<p>{{message}}<button @click="superGreet">supergreet</button></p>',
+      methods: {
+        superGreet () {
+          this.message = 'SUPER HELLO!'
+        }
+      }
+    }
+    new Vue({
+      el: '#app',
+      components: { Greeter, SuperGreeter }
+    })
+  </script>
+</body>
+</html>

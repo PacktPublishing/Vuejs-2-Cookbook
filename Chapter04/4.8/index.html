@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>4.8</title>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <style>
+  .organogram {
+    border: 5px dashed dodgerblue;
+    width: 300px;
+  }
+  .boss {
+    border: 5px double mediumvioletred;
+  }
+  .employee {
+    border: 2px outset lightgrey;
+  }
+  figcaption, h3 {
+    font-family: sans-serif;
+    text-align: center;
+    padding: 2px 0;
+    width: 100%;
+  }
+  .r1 {
+    font-size: 1.5em;
+    color: red;
+  }
+  .r2 {
+    font-size: 1.2em;
+    color: blue;
+  }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <organogram>
+      <template scope="props">
+        <div v-if="props.type === 'boss'">
+          <figure>
+            <img src="http://lorempixel.com/210/210/cats/1"/>
+            <figcaption>Sylvester</figcaption>
+          </figure>
+        </div>
+        <div v-else-if="props.type === 'employee'"
+             :class="'r' + props.rank">
+          <cat :name="catName()"></cat>
+        </div>
+      </template>
+    </organogram>
+  </div>
+
+  <script>
+    Vue.component('cat', {
+      template: `<div>
+                   <figure>
+                     <img :src="'http://lorempixel.com/220/220/cats/?' + name"/>
+                     <figcaption>{{name}}</figcaption>
+                   </figure>
+                 </div>`,
+      props: ['name']
+    })
+    Vue.component('organogram', {
+      template: `<div class="organogram">
+                   <h3>Scratchy co.</h3>
+                   <div class="boss">
+                     <h3>Boss</h3>
+                     <slot type="boss">No boss</slot>
+                   </div>
+                   <div class="employee" v-for="rank in 2">
+                     <h3>Employee</h3>
+                     <slot type="employee" 
+                           :rank="rank">No employee</slot>
+                   </div>
+                 </div>`
+    })
+    new Vue({
+      el: '#app',
+      data: {
+        names: ['Murzik', 'Pushok', 'Barsik', 'Vaska', 'Matroskin']
+      },
+      methods: { // not computed
+        catName () {
+          return this.names[Math.floor(Math.random() * this.names.length)]
+        }
+      }
+    })
+  </script>
+</body>
+</html>

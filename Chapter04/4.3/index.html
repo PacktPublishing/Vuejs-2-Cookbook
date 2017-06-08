@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>4.3</title>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <blabber :ice-breaker="true"></blabber>
+    <blabber></blabber>
+  </div>
+
+  <script>
+    var bus = new Vue()
+    Vue.component('blabber', {
+      template: "<p>{{dialogue[currentLine]}}</p>",
+      props: {
+        iceBreaker: {
+          type: Boolean,
+          default: false
+        }
+      },
+      data () {
+        return {
+          currentLine: this.iceBreaker ? 0 : -1,
+          dialogue: [
+            'hello',
+            'how are you?',
+            'fine thanks',
+            'let’s go drink!',
+            'alright, where?',
+            'to hello’s bar',
+            'hello?'
+          ]
+        }
+      },
+      created () {
+        bus.$on('line', line => {
+          // is not the line I just sent
+          if (line !== this.currentLine) {
+            setTimeout(() => {
+              this.currentLine = (line + 1) % this.dialogue.length
+              bus.$emit('line', this.currentLine)
+            }, 2000)
+          }
+        })
+      },
+      mounted () {
+        if (this.iceBreaker) {
+          bus.$emit('line', 0)
+        }
+      }
+    })
+    new Vue({
+      el: '#app'
+    })
+  </script>
+</body>
+</html>

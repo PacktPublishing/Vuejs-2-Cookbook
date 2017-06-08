@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>4.4</title>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/vuex"></script>
+  <style>
+    .blabber {
+      width: 200px;
+      height: 40px;
+      background-color: gainsboro;
+      border: 1px solid grey;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <blabber></blabber>
+    <blabber></blabber>
+  </div>
+
+  <script>
+    const store = new Vuex.Store({
+      strict: true,
+      state: {
+        currentActor: -1,
+        currentLine: -1,
+        actors: [],
+        dialogue: [
+          'Where are you going?',
+          'To the cinema',
+          'What’s on at the cinema?',
+          '‘Quo vadis?’',
+          'Oh, what does it mean?'
+        ]
+      },
+      mutations: {
+        entersScene (state, uuid) {
+          state.currentLine = 
+            (state.currentLine + 1) % state.dialogue.length
+          state.actors.push({
+            uuid,
+            line: state.dialogue[state.currentLine]
+          })
+          state.currentActor = 
+            (state.currentActor + 1) % state.actors.length
+        },
+        nextLine (state) {
+          state.currentActor = 
+            (state.currentActor + 1) % state.actors.length
+          state.currentLine = 
+            (state.currentLine + 1) % state.dialogue.length
+          state.actors[state.currentActor].line = 
+            state.dialogue[state.currentLine]
+        }
+      }
+    })
+    Vue.component('blabber', {
+      template: '<div class="blabber">{{currentLine}}</div>',
+      data () {
+        return {
+          uuid: Math.random()
+        }
+      },
+      computed: {
+        currentLine () {
+          return store.state.actors.find(actor => actor.uuid === this.uuid).line
+        }
+      },
+      created () {
+        store.commit('entersScene', this.uuid)
+      }
+    })
+    new Vue({
+      el: '#app',
+      mounted () {
+        setInterval(() => {
+          store.commit('nextLine')
+        }, 2000)
+      }
+    })
+  </script>
+</body>
+</html>

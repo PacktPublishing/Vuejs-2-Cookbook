@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>4.6</title>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <style>
+  .course {
+    border: 1px solid black;
+    margin: 10px;
+    padding: 10px;
+  }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <course :menu="menu1"></course>
+    <course :menu="menu2"></course>
+  </div>
+
+  <script>
+    Vue.component('dish', {
+      template: `<p class="dish">{{ham}}&lt;-Delicious!</p>`,
+      props: ['ham']
+    })
+    Vue.component('course', {
+      template: `
+        <section class="course">
+          <dish v-for="ham in menu" :ham="ham"></dish>
+        </section>
+      `,
+      props: {
+        menu: {
+          type: Array,
+          required: true,
+          validator (foodArray) {
+            return foodArray.every(food => typeof food === 'string') &&
+              foodArray.length === 4
+          }
+        }
+      }
+    })
+    new Vue({
+      el: '#app',
+      data: {
+        menu1: ['🍏','🍎','🍐','🍊'],
+        menu2: ['🍔','🍟','🌭','🌮']
+      }
+    })
+  </script>
+</body>
+</html>

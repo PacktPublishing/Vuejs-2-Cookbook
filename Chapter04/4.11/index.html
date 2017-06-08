@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>4.11</title>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <style>
+  span {
+    cursor: pointer;
+  }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <matrioska></matrioska>
+  </div>
+
+  <script>
+    Vue.component('matrioska', {
+      template: '<p>Hello<matrioska></matrioska></p>'
+    })
+    new Vue({
+      el: '#app'
+    })
+  </script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>4.5</title>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <child v-for="i in 10" ref="junior" :num="i"></child>
+    <p>Truth for child 4: {{child4Stomach}}</p>
+  </div>
+
+  <script>
+    Vue.component('child', {
+      template: "<p>Child {{num}}: {{mouth}}</p>",
+      props: ['num'],
+      data () {
+        return {
+          mouth: 'I didn’t eat that cookie',
+          stomach: `Yummy that cookie was ${this.num} times more delicious.`
+        }
+      }
+    })
+    new Vue({
+      el: '#app',
+      data: {
+        child4Stomach: 'unknown'
+      },
+      mounted () {
+        this.child4Stomach = this.$refs.junior[3].stomach
+      }
+    })
+  </script>
+</body>
+</html>
