@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
+  <script src="https://unpkg.com/vuefire/dist/vuefire.js"></script>
+</head>
+<body>
+  <div id="app">
+    <ul>
+      <li v-for="item in items">
+        {{item.name}}: {{item.smell}}
+        <button @click="removeItem(item['.key'])">X</button>
+      </li>
+    </ul>
+    <form @submit.prevent="addItem">
+      <input v-model="newItem" />
+      smells like
+      <input v-model="newSmell" />
+      <button>Add #{{items.length}}</button>
+    </form>
+  </div>
+
+  <script>
+    const config = {
+      databaseURL: 'https://smell-diary.firebaseio.com/',
+    }
+    const firebaseApp = firebase.initializeApp(config)
+    const db = firebaseApp.database()
+
+    new Vue({
+      el: '#app',
+      firebase: {
+        items: db.ref('/items')
+      },
+      data: {
+        newItem: '',
+        newSmell: ''
+      },
+      methods: {
+        addItem () {
+          this.$firebaseRefs.items
+            .push({
+              name: this.newItem,
+              smell: this.newSmell
+            })
+          this.newItem = ''
+          this.newSmell = ''
+        },
+        removeItem (key) {
+          this.$firebaseRefs.items
+            .child(key).remove()
+        }
+      }
+    })
+  </script>
+</body>
+</html>

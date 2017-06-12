@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "clarifai": "^2.1.3-dev"
+  }
+}

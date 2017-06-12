@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <script src="https://unpkg.com/vue"></script>
+  <script src="/horizon/horizon.js"></script>
+  <script src="https://sdk.clarifai.com/js/clarifai-latest.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <div>
+      <h3>Dear diary...</h3>
+      <ul>
+        <li v-for="entry in entries">
+          {{ entry.datetime.toLocaleDateString() }}:
+          {{ entry.text }}
+        </li>
+      </ul>
+    </div>
+    <h3>New Entry</h3>
+    <img style="max-width:200px;max-height:200px" :src="data_uri" />
+    <input type="file" @change="selectFile" ref="file">
+    <p v-if="concepts.length">Choose an entry</p>
+    <button v-for="concept in concepts" @click="send(concept)">
+      {{concept}}
+    </button>
+  </div>
+  <script>
+    var app = new Clarifai.App(
+      '7CDIjv_VqEYfmFi_BIV3a8fX-LwaQEzc78CcW1sA',
+      'XC0S9GHxS0iONFszE6itpjrSYgOhAT0jZWQTx4hl'
+    )
+    const horizon = new Horizon()
+    const entries = horizon('entries')
+    new Vue({
+      el: '#app',
+      data: {
+        concepts: [],
+        data_uri: undefined,
+        entries: []
+      },
+      methods: {
+        selectFile(e) {
+          const file = e.target.files[0]
+          const reader = new FileReader()
+          if (file) {
+            reader.addEventListener('load', () => {
+              const data_uri = reader.result
+              this.data_uri = data_uri
+              const base64 = data_uri.split(',')[1]
+              app.models.predict(Clarifai.GENERAL_MODEL, base64)
+                .then(response => {
+                  this.concepts =
+                    response.outputs[0].data.concepts.map(c => c.name)
+                })
+            })
+            reader.readAsDataURL(file)
+          }
+        },
+        send(concept) {
+          entries.store({
+            text: concept,
+            datetime: new Date()
+          }).subscribe(
+            result => console.log(result),
+            error => console.log(error)
+          )
+          this.concepts = []
+          this.$refs.file.value = ''
+          this.data_uri = undefined
+        }
+      },
+      created() {
+        entries.order('datetime', 'descending').limit(10).watch()
+          .subscribe(allEntries => {
+            this.entries = [...allEntries].reverse()
+          })
+      }
+    })
+  </script>
+</body>
+
+</html>

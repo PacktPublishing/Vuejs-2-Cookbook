@@ -1,0 +1,61 @@
+<html>
+  <head>
+    <title>Welcome to Feathers</title>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/vue/2.1.10/vue.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js"></script>
+    <script src="//unpkg.com/feathers-client@^1.0.0/dist/feathers.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <div v-for="cat in cats" style="display:inline-block">
+        <img width="100" height="100" :src="cat.url" />
+        <p>{{cat.name}}</p>
+      </div>
+      <form @submit.prevent="addCat">
+        <div>
+          <label>Cat Name</label>
+          <input v-model="newName" />
+        </div>
+        <div>
+          <label>Cat Url</label>
+          <input v-model="newUrl" />
+        </div>
+        <button>Add cat</button>
+        <img width="30" height="30" :src="newUrl" />
+      </form>
+    </div>
+    <script>
+    const socket = io('http://192.168.0.171:3030')
+    const app = feathers()
+      .configure(feathers.socketio(socket))
+    const catService = app.service('cats')
+    new Vue({
+      el: '#app',
+      data: {
+        cats: [],
+        newName: '',
+        newUrl: ''
+      },
+      methods: {
+        addCat () {
+          catService.create({
+            name: this.newName,
+            url: this.newUrl
+          })
+          this.newName = ''
+          this.newUrl = ''
+        }
+      },
+      mounted () {
+        catService.find()
+          .then(page => {
+            this.cats = page.data
+          })
+        catService.on('created', cat => {
+          this.cats.push(cat)
+        })
+      }
+    })
+    </script>
+  </body>
+</html>
