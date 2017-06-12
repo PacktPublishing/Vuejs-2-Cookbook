@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>7.6</title>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <h2>Welcome to my test page</h2>
+    <button @click="show = true">Show</button>
+    <p v-show="show">Hello Nightwatch!</p>
+  </div>
+
+  <script>
+    const vm = new Vue({
+      el: '#app',
+      data: {
+        show: false
+      }
+    })
+  </script>
+</body>
+</html>

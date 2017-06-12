@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>7.9</title>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.5.2/jasmine.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.5.2/jasmine.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.5.2/jasmine-html.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.5.2/boot.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sinon.js/1.15.4/sinon.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.js"></script>
+</head>
+<body>
+  <div id="app">
+    <button @click="retrieve">Retrieve Post</button>
+    <p v-if="post">{{post}}</p>
+  </div>
+
+  <script>
+    const vm = new Vue({
+      el: '#app',
+      data: {
+        post: undefined
+      },
+      methods: {
+        retrieve () {
+          axios
+            .get('https://jsonplaceholder.typicode.com/posts/1')
+            .then(response => {
+              console.log('setting post')
+              this.post = response.data.body
+            })
+        }
+      }
+    })
+    describe('my app', () => {
+      let sandbox
+      beforeEach(() => sandbox = sinon.sandbox.create())
+      afterEach(() => sandbox.restore())
+      it('should save the returned post body ', done => {
+        const promise = new Promise(resolve => 
+          resolve({ data: { body: 'Hello World' } })
+        )
+        sandbox.stub(axios, 'get').returns(promise)
+        vm.retrieve()
+        promise.then(() => {
+          expect(vm.post).toEqual('Hello World')
+          done()
+        })
+      })
+    })
+  </script>
+</body>
+</html>

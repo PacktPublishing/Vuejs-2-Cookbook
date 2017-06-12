@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>7.1</title>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.5.2/jasmine.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.5.2/jasmine.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.5.2/jasmine-html.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.5.2/boot.js"></script>
+</head>
+<body>
+  <div id="app">
+    <h1>Welcome</h1>
+    <p>{{greeting}}</p>
+  </div>
+
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        greeting: 'Hello World!'
+      }
+    })
+    describe('my app', () => {
+      it('should say Hello World', () => {
+        expect(document.querySelector('p').innerText).toContain('Hello World')
+      })
+      it('should have an header that says `Welcome`', () => {
+        expect(document.querySelector('h1').innerText)
+          .toContain('Welcome')
+      })
+    })
+  </script>
+</body>
+</html>

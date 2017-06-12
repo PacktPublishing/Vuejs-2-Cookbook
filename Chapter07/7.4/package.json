@@ -1,0 +1,14 @@
+{
+  "name": "7.2",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "karma start"
+  },
+  "devDependencies": {
+    "jasmine": "^2.0.0",
+    "karma": "^1.0.0",
+    "karma-chrome-launcher": "^2.0.0",
+    "karma-jasmine": "^0.3.0",
+    "vue": "^2.1.8"
+  }
+}
