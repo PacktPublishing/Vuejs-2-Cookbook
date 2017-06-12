@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>6.4</title>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+</head>
+<body>
+  <div id="app">
+    <h1>Second-Hand Hardware</h1>
+    <router-view name="list"></router-view>
+    <router-view></router-view>
+  </div>
+
+  <script>
+    Vue.use(VueRouter)
+    const List = { template: `
+      <div>
+        <h2>Shopping List</h2>
+        <ul>
+          <li>Computer</li>
+        </ul>
+      </div>
+    ` }
+    const Parts = { template: `
+      <div>
+        <h2>Computer Parts</h2>
+        <ul>
+          <li><router-link to="/computer">Computer</router-link></li>
+          <li>CD-ROM</li>
+        </ul>
+      </div>
+    ` }
+    const ComputerDetail = { template: `
+      <div>
+        <h2>Computer Detail</h2>
+        <p>Pentium 120Mhz, CDs sold separately</p>
+      </div>
+    ` }
+    const router = new VueRouter({
+      routes: [
+        { path: '/', 
+          components: {
+            default: Parts,
+            list: List
+          }
+        },
+        { path: '/computer',
+          components: {
+            default: ComputerDetail,
+            list: List
+          }
+        }
+      ]
+    })
+    new Vue({
+      router,
+      el: '#app'
+    })
+  </script>
+</body>
+</html>

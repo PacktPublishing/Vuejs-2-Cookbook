@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!--
+    `npm install -g history-server`
+    `history-server .`
+  -->
+  <title>6.11</title>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+</head>
+<body>
+  <div id="app">
+    <h1>News Portal</h1>
+    <ul>
+      <li><router-link to="/">Home</router-link></li>
+      <li><router-link to="/sports">Sports</router-link></li>
+      <li><router-link to="/fashion">Fashion</router-link></li>
+    </ul>
+    <router-view></router-view>
+  </div>
+
+  <script>
+    Vue.use(VueRouter)
+    const Home = { template: '<div>Welcome to BBCCN</div>' }
+    const Sports = { template: `
+      <div>
+        <p v-for="i in 30">
+          Sample text about sports {{i}}.
+        </p>
+        <router-link to="/fashion">Go to Fashion</router-link>
+        <p v-for="i in 30">
+          Sample text about sports {{i + 30}}.
+        </p>
+      </div>
+    ` }
+    const Fashion = { template: `
+      <div>
+        <p v-for="i in 30">
+          Sample text about fashion {{i}}.
+        </p>
+        <router-link to="/sports">Go to Sports</router-link>
+        <p v-for="i in 30">
+          Sample text about fashion {{i + 30}}.
+        </p>
+      </div>
+    ` }
+    const router = new VueRouter({
+      mode: 'history',
+      routes: [
+        { path: '/', component: Home },
+        { path: '/sports', component: Sports },
+        { path: '/fashion', component: Fashion }
+      ],
+      scrollBehavior (to, from, savedPosition) {
+        if (savedPosition) {
+          return savedPosition
+        } else {
+          return { x: 0, y: 0 }
+        }
+      }
+    })
+    new Vue({
+      router,
+      el: '#app'
+    })
+  </script>
+</body>
+</html>

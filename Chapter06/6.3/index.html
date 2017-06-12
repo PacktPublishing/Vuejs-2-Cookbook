@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>6.3</title>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+</head>
+<body>
+  <div id="app">
+    <h1>Online Restaurant</h1>
+    <ul>
+      <li><router-link :to="{ name: 'home' }">Home</router-link></li>
+      <li v-for="i in 10">
+        <router-link :to="{ name: 'menu', params: { id: i } }">Menu {{i}}</router-link>
+      </li>
+    </ul>
+    <router-view class="view"></router-view>
+  </div>
+
+  <script>
+    Vue.use(VueRouter)
+    const Home = { template: '<div>Welcome to Online Restaurant</div>' }
+    const Menu = { template: `<div>
+        You just ordered 
+        <img :src="'http://lorempixel.com/200/200/food/' + $route.params.id">
+      </div>` }
+    const router = new VueRouter({
+      routes: [
+        { path: '/', name:'home', component: Home },
+        { path: '/menu/:id', name: 'menu', component: Menu },
+      ]
+    })
+    new Vue({
+      router,
+      el: '#app'
+    })
+  </script>
+</body>
+</html>

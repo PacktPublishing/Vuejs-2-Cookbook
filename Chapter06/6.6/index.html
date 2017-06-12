@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- npm install -g history-server
+       history-server . -->
+  <title>6.6</title>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+<style>
+.emoji {
+  font-size: 3em;
+}
+</style>
+</head>
+<body>
+  <div id="app">
+    <h1>Clothes Shop</h1>
+    <router-link to="/red-dress-01/">Valentino</router-link>
+    <router-link to="/red-purse-A2/">Prada</router-link>
+    <router-view></router-view>
+  </div>
+
+  <script>
+    Vue.use(VueRouter)
+    const Valentino01 = { template: '<div class="emoji">💃</div>'
+    }
+    const PradaA2 = { template: '<div class="emoji">👛</div>'
+    }
+    const router = new VueRouter({
+      routes: [
+        { 
+          path: '/red-dress-01', 
+          component: Valentino01, 
+          alias: '/green-dress-01' 
+        },
+        {
+          path: '/red-purse-A2',
+          component: PradaA2,
+          alias: '/green-purse-A2'
+        }
+      ]
+    })
+    new Vue({
+      router,
+      el: '#app'
+    })
+  </script>
+</body>
+</html>

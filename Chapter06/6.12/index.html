@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>6.12</title>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+  <style>
+  .v-enter-active, .v-leave-active {
+   transition: opacity .5s;
+  }
+  .v-enter, .v-leave-active {
+    opacity: 0
+  }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <h1>Ghost’s Restaurant</h1>
+    <ul>
+      <li><router-link to="/">Home</router-link></li>
+      <li><router-link to="/menu">Menu</router-link></li>
+    </ul>
+    <transition mode="out-in">
+      <router-view></router-view>
+    </transition>
+  </div>
+
+  <script>
+    Vue.use(VueRouter)
+    const Home = { template: '<div>Welcome to Ghost’s</div>' }
+    const Menu = { template: '<div>Today we have invisible cookies</div>' }
+    const router = new VueRouter({
+      routes: [
+        { path: '/', component: Home },
+        { path: '/menu', component: Menu }
+      ]
+    })
+    new Vue({
+      router,
+      el: '#app'
+    })
+  </script>
+</body>
+</html>

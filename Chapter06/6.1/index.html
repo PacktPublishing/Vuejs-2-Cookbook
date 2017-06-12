@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>6.1</title>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+  <style>
+  a.router-link-active, li.router-link-active>a {
+    background-color: gainsboro;
+  }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <h1>Choppy’s Restaurant</h1>
+    <ul>
+      <router-link tag="li" to="/" exact><a>Home</a></router-link>
+      <li><router-link to="/menu">Menu</router-link></li>
+      <router-link tag="li" to="/bar" :event="['mousedown', 'touchstart']">
+        <a>Bar</a>
+      </router-link>
+    </ul>
+    <router-view></router-view>
+  </div>
+
+  <script>
+    Vue.use(VueRouter)
+    const Home = { template: '<div>Welcome to Choppy’s</div>' }
+    const Menu = { template: '<div>Today we have cookies</div>' }
+    const Bar = { template: '<div>We serve cocktails</div>' }
+    const router = new VueRouter({
+      routes: [
+        { path: '/', component: Home },
+        { path: '/menu', component: Menu },
+        { path: '/bar', component: Bar }
+      ]
+    })
+    new Vue({
+      router,
+      el: '#app'
+    })
+  </script>
+</body>
+</html>

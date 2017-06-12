@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>6.2</title>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.js"></script>
+  <link rel="stylesheet" href="https://cdn.bootcss.com/nprogress/0.2.0/nprogress.css">
+  <script src="https://cdn.bootcss.com/nprogress/0.2.0/nprogress.js"></script>
+</head>
+<body>
+  <div id="app">
+    <h1>My Portfolio</h1>
+    <ul>
+      <li><router-link to="/">Home</router-link></li>
+      <li><router-link to="/aboutme">About Me</router-link></li>
+
+    </ul>
+    <router-view class="view"></router-view>
+  </div>
+
+  <script>
+    const AboutMe = Vue.component('aboutme', {
+      template: `<div>Name:{{name}}<br>Pone:{{phone}}</div>`,
+      data () {
+        return {
+          name: undefined,
+          phone: undefined
+        }
+      },
+      beforeRouteEnter (to, from, next) {
+        axios.post('http://schematic-ipsum.herokuapp.com/', {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "ipsum": "name"
+            },
+            "phone": {
+              "type": "string",
+              "format": "phone"
+            }
+          }
+        }).then(response => {
+          NProgress.done()
+          next(vm => {
+            vm.name = response.data.name
+            vm.phone = response.data.phone
+          })
+        })
+      }
+    })
+    Vue.use(VueRouter)
+    const Home = { template: '<div>This is my home page</div>' }
+    const router = new VueRouter({
+      routes: [
+        { path: '/', component: Home },
+        { path: '/aboutme', component: AboutMe },
+      ]
+    })
+    router.beforeEach((to, from, next) => {
+      NProgress.start()
+      next()
+    })
+    router.afterEach((to, from) => {
+      NProgress.done()
+    })
+    new Vue({
+      router,
+      el: '#app'
+    })
+  </script>
+</body>
+</html>
