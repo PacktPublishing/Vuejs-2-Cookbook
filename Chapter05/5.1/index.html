@@ -20,7 +20,7 @@
       created () {
         axios.get('http://api.adviceslip.com/advice')
           .then(response => {
-            this.advice = undefined.hello
+            this.advice = response.data.slip.advice
           })
           .catch(error => {
             this.advice = 'There was an error: ' + error.message
